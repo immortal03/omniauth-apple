@@ -91,12 +91,14 @@ module OmniAuth
       def fetch_jwk!(kid)
         JSON::JWK::Set::Fetcher.fetch File.join(ISSUER, 'auth/keys'), kid: kid
       rescue => e
+        puts "Error from fetch_jwk!: #{e.message}"
         raise CallbackError.new(:jwks_fetching_failed, e)
       end
 
       def verify_signature!(id_token, jwk)
         id_token.verify! jwk
       rescue => e
+        puts "Error from verify_signature!: #{e.message}"
         raise CallbackError.new(:id_token_signature_invalid, e)
       end
 
@@ -167,6 +169,7 @@ module OmniAuth
       end
 
       def client_secret
+        puts "options params: #{options}"
         jwt = JSON::JWT.new(
           iss: options.team_id,
           aud: ISSUER,
