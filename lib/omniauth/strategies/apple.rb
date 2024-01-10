@@ -76,6 +76,7 @@ module OmniAuth
       end
 
       def id_info
+        puts "request.params from id_info: #{request.params}"
         @id_info ||= if request.params&.key?('id_token') || access_token&.params&.key?('id_token')
                        id_token_str = request.params['id_token'] || access_token.params['id_token']
                        id_token = JSON::JWT.decode(id_token_str, :skip_verification)
@@ -137,6 +138,7 @@ module OmniAuth
       end
 
       def client_id
+        puts "id_info from client_id: #{id_info}"
         @client_id ||= if id_info.nil?
                          options.client_id
                        else
