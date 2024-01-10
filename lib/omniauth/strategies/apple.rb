@@ -42,6 +42,7 @@ module OmniAuth
       end
 
       def client
+        puts "client_id: #{client_id}, client_secret: #{client_secret}, #{options.client_options}"
         ::OAuth2::Client.new(client_id, client_secret, deep_symbolize(options.client_options))
       end
 
